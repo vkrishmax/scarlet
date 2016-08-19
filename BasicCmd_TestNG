@@ -1,0 +1,39 @@
+import org.openqa.selenium.By; // By - For xpath assign
+import org.openqa.selenium.WebDriver; // WebDriver Declaration
+import org.openqa.selenium.WebElement; // For WebElement variable declaration
+import org.openqa.selenium.firefox.FirefoxDriver; // For launching Firefox Browser
+import org.openqa.selenium.support.ui.Select; // For Select Command
+import org.testng.annotations.AfterMethod; // AfterMethod Annotation
+import org.testng.annotations.BeforeMethod; // BeforeMethod Annotation
+import org.testng.annotations.Test; // Test Annotation
+
+
+public class Test1 {
+
+	public static WebDriver dr;
+	@BeforeMethod // This Method will run before - each @Test method
+	public static void Start()
+	{
+		// launch Browser
+		dr = new FirefoxDriver();
+		dr.get("https://www.cleartrip.com");
+		dr.manage().window().maximize();	
+	}
+	@AfterMethod // This Method will run after - each @Test method
+	public static void TearDown()
+	{
+		// Close Browser
+		dr.quit();
+	}
+	@Test
+	public static void TC01()
+	{
+		// Click Command
+		dr.findElement(By.xpath("")).click();
+		// Type Command
+		dr.findElement(By.xpath("")).sendKeys("");
+		// select Command
+		WebElement drpItem = dr.findElement(By.xpath(""));
+		new Select(drpItem).selectByVisibleText("");
+	}
+}
