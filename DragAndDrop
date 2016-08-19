@@ -1,0 +1,15 @@
+public static void DragAndDrop() {
+		try
+		{
+			WebElement drag = dr.findElement(By.xpath(""));
+			WebElement drop = dr.findElement(By.xpath(""));
+			Actions act = new Actions(dr);
+			act.clickAndHold(drag).moveToElement(drop).release(drag).build().perform();
+		
+		Reporter.log("Successfully performed drag and drop");
+		}
+		catch(Exception e)
+		{
+			Reporter.log("Unable to to perform drag and drop");
+		}
+	}
