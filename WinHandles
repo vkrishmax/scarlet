@@ -1,0 +1,21 @@
+public static void WinHandles() {
+		try {
+			// After lauching the Browser
+			String old = dr.getWindowHandle();
+			// Click on any link or button 
+			dr.findElement(By.xpath("")).click();
+			// if you experience any new window after the click action
+			ArrayList<String> a = new ArrayList<String>(dr.getWindowHandles());
+			a.remove(old);
+			String NewWin = a.get(0);
+			dr.switchTo().window(NewWin);
+			// Perform any action in second window
+			dr.findElement(By.xpath("")).click();
+			// Before to old window
+			dr.switchTo().window(old);
+			
+			Reporter.log("Successfully handled multiple windows");
+		} catch (Exception e) {
+			Reporter.log("Unable to handle multiple windows");
+		}
+	}
