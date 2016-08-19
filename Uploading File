@@ -1,0 +1,24 @@
+
+/////////////// AutoIT Script//////////////
+
+WinWaitActive("Upload File")
+Sleep(3000)
+Send("uploading file path")
+Sleep(3000)
+ControlClick("Upload File","","Button1")
+
+////////////////////////////////////////////////////////////
+
+@Test
+	public static void UploadFile() {
+		try {
+			//Click on browser button for uploading file
+			dr.findElement(By.xpath("")).click();
+			//Execute the AutoIT exe
+			Runtime.getRuntime().exec("EXE file path");
+			
+			Reporter.log("Successfully uploaded the file");
+		} catch (Exception e) {
+			Reporter.log("Unable to upload the file");
+		}
+	}
