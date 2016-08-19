@@ -1,0 +1,101 @@
+
+Create Excel
+
+////////////////////////////////
+public static String retrieveXL(int i, int j) {
+		String VAL = "";
+		try {
+		
+			File file = new File ("Excel Path");
+			Workbook w = Workbook.getWorkbook(file);
+			Sheet s = w.Sheet(0);
+			Cell c = s.Cell(i,j);
+			VAL = c.getContent();
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return VAL;
+	}
+	
+	////////////////////////////////////////////////////
+	
+	
+import org.openqa.selenium.By; // By - For xpath assign
+import org.openqa.selenium.WebDriver; // WebDriver Declaration
+import org.openqa.selenium.WebElement; // For WebElement variable declaration
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver; // For launching Firefox Browser
+import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.support.ui.Select; // For Select Command
+import org.testng.Reporter;
+import org.testng.annotations.AfterMethod; // AfterMethod Annotation
+import org.testng.annotations.BeforeMethod; // BeforeMethod Annotation
+import org.testng.annotations.Test; // Test Annotation
+
+public class Test1 {
+
+	public static WebDriver dr;
+	public static String Browser = "FF";
+
+	@BeforeMethod
+	// This Method will run before - each @Test method
+	public static void Start() {
+		try {
+			// launch Browser
+			if (Browser.contains("FF")) {
+				dr = new FirefoxDriver();
+			}
+			if (Browser.contains("CHROME")) {
+				System.setProperty("webdriver.chrome.driver", "DriverPath");
+				dr = new ChromeDriver();
+			}
+			if (Browser.contains("CHROME")) {
+				System.setProperty("webdriver.ie.driver", "DriverPath");
+				dr = new InternetExplorerDriver();
+			}
+
+			dr.get(Data.retrieve("URL"));
+			dr.manage().window().maximize();
+
+			// TestNG log
+			Reporter.log("Successfully lauched the Browser");
+
+		} catch (Exception e) {
+			Reporter.log("Unable to launch the Browser");
+		}
+	}
+
+	@AfterMethod
+	// This Method will run after - each @Test method
+	public static void TearDown() {
+		// Close Browser
+		try {
+			dr.quit();
+			Reporter.log("Successfully closed the Browser");
+		} catch (Exception e) {
+			Reporter.log("Unable to close the Browser");
+
+		}
+	}
+
+	@Test
+	public static void TC01() {
+		try
+		{
+		// Click Command
+		dr.findElement(By.xpath(OR.rd_roundTrip)).click();
+		// Type Command
+		dr.findElement(By.xpath(OR.txtbx_From)).sendKeys(Data.retrieveXL(1, 1));
+		// select Command
+		WebElement drpItem = dr.findElement(By.xpath(OR.drp_Adult));
+		new Select(drpItem).selectByVisibleText(Data.retrieveXL(2, 1));
+		Reporter.log("Verified the search flight in cleartrip");
+		}
+		catch(Exception e)
+		{
+			Reporter.log("Unable to verified the searching flight functionality");
+		}
+	}
+}
+
+	
