@@ -47,9 +47,15 @@ public class Test1 {
 
 	@AfterMethod
 	// This Method will run after - each @Test method
-	public static void TearDown() {
+	public static void TearDown(ITestResult rs) {
 		// Close Browser
 		try {
+			if(rs.isSuccess())
+			{
+				File scr = ((TakesScreenshot)dr).getScreenshotAs(OutputType.FILE);
+				FileUtils.copyFile(scr, new File("pathToSve the Screenshot"+"name.png"));
+			}
+			
 			dr.quit();
 			Reporter.log("Successfully closed the Browser");
 		} catch (Exception e) {
